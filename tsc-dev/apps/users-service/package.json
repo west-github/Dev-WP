@@ -1,0 +1,9 @@
+{
+  "name": "users-service",
+  "version": "1.0.0",
+  "description": "This service provides users functionality",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

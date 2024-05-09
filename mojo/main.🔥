@@ -1,0 +1,11 @@
+struct User:
+    name: String
+
+
+    fn some_name(self) -> None:
+        while True:
+            ...
+
+
+fn main():
+    print("Yes we got mojo installed")

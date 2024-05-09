@@ -1,0 +1,15 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "clear && rollup -i src/main.js -o dist/build.js && node dist/build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

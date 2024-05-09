@@ -1,0 +1,19 @@
+{
+  "name": "tsc-dev",
+  "version": "1.0.0",
+  "description": "Some description about the project",
+  "type": "module",
+  "main": "main.ts",
+  "scripts": {
+    "dev": "clear && echo Compiling Source Code &&  npx tsc && clear && echo Done Compiling Source Code"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.4.5"
+  },
+  "workspaces": [
+    "app/users-service"
+  ]
+}
