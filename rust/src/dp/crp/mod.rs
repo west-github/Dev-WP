@@ -42,5 +42,19 @@ impl<'a, T: Debug> IHandler<T> for Monkey<'a, T> {
 
 #[test]
 fn crp_test() {
-    let monkey = Monkey::new("Banana".into(), false, Some(&Monkey::new("Nut".into(), false, None)));
+    #[derive(Debug)]
+    struct Request {
+        content: String,
+    }
+
+    impl Request {
+        fn new(content: String) -> Self {
+            Self { content }
+        }
+    }
+
+    let nut: Monkey<Request> = Monkey::new("Nut".into(), false, None);
+    let monkey = Monkey::new("Banana".into(), false, Some(&nut));
+
+    monkey.handle(&Request::new("foods".into()))
 }
