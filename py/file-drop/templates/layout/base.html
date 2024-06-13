@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" class="size-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    <title>{% block title %}{% endblock %} - fileDrop</title>
+    <link href="/asset/app.css" rel="stylesheet">
+    {% endblock %}
+</head>
+<body class="size-full bg-gradient-to-br from-slate-900 to-stone-800 text-white">
+    {% block content%}
+    {% block logo %}
+            <h1 class="text-4xl font-bold italic text-center select-none pointer-events-none">fileDrop</h1>
+    {% endblock %}
+    {% endblock %}
+</body>
+</html>

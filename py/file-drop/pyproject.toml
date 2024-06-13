@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "file-drop"
+version = "0.1.0"
+description = "Quick project to learn about file streaming and pre-signed urls"
+authors = ["west-github <westcoder@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

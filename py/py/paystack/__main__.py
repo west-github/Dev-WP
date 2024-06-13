@@ -1,4 +1,14 @@
 import asyncio
+from dataclasses import dataclass
+
+
+@dataclass
+class User:
+    age: int
+    name: str
+    other: str
+
+    def get_something(self) -> None: ...
 
 
 async def task(args: str) -> None:

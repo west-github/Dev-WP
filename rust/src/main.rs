@@ -1,125 +1,69 @@
-use rust::string;
-use std::fs;
+use anyhow::Result;
 
-pub trait ILogger {
-    fn log(&self, content: String);
-}
 
-fn log(logger: impl ILogger, content: String) {
-    logger.log(content);
-}
 
-pub struct User {
-    name: String,
-    email: String,
-}
 
-impl User {
-    pub fn new(name: String, email: String) -> Self {
-        Self { name, email }
-    }
-}
+use std::{
+    thread,
+    time::{Duration, Instant},
+};
 
-/*
-lorem
-*/
-pub struct FileLogger {
-    path: String,
-}
-fn file_logger(path: String) -> FileLogger {
-    FileLogger { path }
-}
+fn work() -> Result<i32> {
+    let mut file = std::fs::OpenOptions::new()
+        .append(true)
+        .create(true)
+        .read(true)
+        .open("index.txt")?;
 
-impl ILogger for FileLogger {
-    fn log(&self, content: String) {
-        let _ = fs::write(self.path.as_str(), content);
-    }
-}
+    // let mut file = std::io::BufReader::new(file);
 
-fn main() {
-    let user = User::new(string!("West"), string!("West@west2.com"));
-    let fl = file_logger("./user.txt".into());
+    let mut buffer = [0; 20];
+    let (tx, rv) = std::sync::mpsc::channel::<String>();
 
-    log(fl, format!("Entry - User: name: {} email: {}", user.name, user.email));
-
-    fn recur(lists: &[i32]) {
-        match lists {
-            [one] => println!("We got value: {}", one),
-
-            &[ref head @ .., tail] if !head.is_empty() => {
-                println!("We got value: {}", tail);
-
-                recur(head)
+    let closure = move || loop {
+        thread::sleep(Duration::from_secs(1));
+        use std::io::Read;
+        let b_read = match file.read(&mut buffer) {
+            Ok(b) if b == 0 => break,
+            Ok(b) => b,
+            Err(e) => {
+                println!("Error happened while reading to buffer: {}", e);
+                break;
             }
-            _ => (),
+        };
+
+        if let Err(e) = tx.send(clean_buf_to_string(&buffer[0..b_read])) {
+            println!("Error happened while sending to channel: {}", e);
+            break;
         }
+    };
+
+    std::thread::spawn(closure);
+
+    let mut count = 0;
+    while let Ok(_message) = rv.recv() {
+        count += 1;
     }
 
-    recur(&vec![1, 2, 3, 4, 5]);
-
-    let data = Data::new("West".into());
-
-    take_str(&data);
-
-    fn take_str(value: &str) {
-        println!("We got a value of: {}", value);
-    }
-
-    fn use_result() -> Result<Data, &'static str> {
-        Ok(Data::new(string!("west in the building")))
-    }
-
-    let value = 10;
-
-    fn on_auth(Data { content }: Data, value: i32) -> () {
-        println!("We got content: {} value: {}", content, value);
-    }
-
-    return use_result()
-        .map(|data| on_auth(data, value))
-        .unwrap_or_else(|err| println!("We got this error: {}", err));
+    Ok(count)
 }
 
-#[allow(dead_code)]
-mod new_pattern {
-    trait Foo {
-        fn use_foo(&self);
+fn main() -> Result<()> {
+    println!("{:>20}", "DEV - RUNNING");
+    for _ in 0..10 {
+        let now = std::time::Instant::now();
+        let count = work()?;
+        println!("Count: {} - {:?}", count, Instant::now().duration_since(now));
     }
 
-    fn use_foo<T: Foo>(foo: T) {
-        foo.use_foo();
-    }
+    println!("From the main thread ");
 
-    struct UseFoo;
-
-    impl Foo for UseFoo {
-        fn use_foo(&self) {
-            println!("We are using foo aren't we")
-        }
-    }
-
-    #[test]
-    fn test_use_foo() {
-        let _uf = UseFoo {};
-
-        use_foo(_uf);
-    }
+    Ok(())
 }
 
-pub struct Data {
-    content: String,
-}
-
-impl Data {
-    pub fn new(content: String) -> Self {
-        Self { content }
-    }
-}
-
-impl std::ops::Deref for Data {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
-        &self.content
-    }
+fn clean_buf_to_string(buf: &[u8]) -> String {
+    String::from_utf8_lossy(buf)
+        .to_string()
+        .replace("\n", "")
+        .replace("\r", "")
 }

@@ -1,13 +1,12 @@
 from typing import Any, Callable
 from .response import Response
 from .request import Request
+from .route import callable
 
 
 class Layer:
 
-    def __init__(
-        self, func: Callable[[Request, Response, Callable[[Any], None]], None]
-    ) -> None:
+    def __init__(self, func: callable) -> None:
         self.func = func
 
     def handle_request(

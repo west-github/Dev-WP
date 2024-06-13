@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    input {
+        @apply bg-transparent text-sm h-8 border border-slate-800 text-white outline-none px-2 block w-full;
+    }
+
+    button {
+        @apply h-10 w-fit px-4 bg-red-400 rounded;
+    }
+}

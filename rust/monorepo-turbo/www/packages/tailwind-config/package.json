@@ -1,0 +1,12 @@
+{
+    "name": "@repo/tailwind-config",
+    "version": "1.0.0",
+    "description": "Project Tailwind Configuration Shared Amongs All dependants",
+    "type": "module",
+    "exports": {
+        ".": "./tailwind-config.ts"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.3"
+    }
+}

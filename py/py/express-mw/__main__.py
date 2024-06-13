@@ -1,18 +1,16 @@
 from typing import Any, Callable
 from .request import Request
 from .response import Response
-from .route import new_router
+from .route import Route
 
 
-def use_handler(req: Request, res: Response, next: Callable[[Any], None]) -> None:
+def use_handler(req: Request, next: Callable[[Any], None]) -> None:
     print(f"Got a request with data: {req}")
-
     next(None)
     ...
 
 
-def clear_res(req: Request, res: Response, next: Callable[[Any], None]) -> None:
-    res.dat = ""
+def clear_res(req: Request, next: Callable[[Any], None]) -> None:
     next(None)
 
 
@@ -20,8 +18,8 @@ def res_handler(req: Request, res: Response, next: Callable[[Any], None]) -> Non
     res.dat = "The soldiers are coming"
 
 
-router = (
-    new_router()
+(
+    Route()
     .use(use_handler)
     .use(use_handler)
     .use(use_handler)
@@ -30,10 +28,5 @@ router = (
     .use(use_handler)
     .use(use_handler)
     .use(use_handler)
+    .dispatch(Request("Some Data"), Response("Empty Mutable Response"))
 )
-
-res = Response("Empty Mutable Response")
-router.dispatch(Request("Some Data"), res)
-
-
-print(res)

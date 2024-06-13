@@ -3,6 +3,8 @@ from .layer import Layer
 from .request import Request
 from .response import Response
 
+type callable = Callable[[Request, Response, Callable[[Any], None]], None]
+
 
 class Route:
 
@@ -31,12 +33,6 @@ class Route:
 
         next()
 
-    def use(
-        self, func: Callable[[Request, Response, Callable[[Any], None]], None]
-    ) -> Self:
+    def use(self, func: callable) -> Self:
         self.stack.append(Layer(func))
         return self
-
-
-def new_router() -> Route:
-    return Route()

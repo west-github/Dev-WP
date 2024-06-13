@@ -1,5 +1,6 @@
 #![allow(dead_code, non_snake_case, unused_variables, unused_doc_comments)]
 
+mod atomic;
 mod bytes;
 mod copy;
 mod cs;

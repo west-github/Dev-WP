@@ -1,5 +1,7 @@
-rust/target
-Csharp/bin
-Csharp/obj
-py/.venv
-tsc-dev/node_modules
+target
+bin
+obj
+.venv
+node_modules
+build
+__pycache__

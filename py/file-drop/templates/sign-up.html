@@ -1,0 +1,35 @@
+{% extends "layout/base.html" %}
+{% block title %}Sign-In {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="size-full p-4 gap-10 pt-[15%] md:pt-[5%]">
+    {% block logo %}
+        {{ super() }}
+    {% endblock %}
+    <p class="text-center text-xl my-6 text-orange-400">Sign up - Register an account</p>
+    <div class="max-w-xs space-y-6 mx-auto">
+        <form class="border border-slate-800 w-full rounded p-4 space-y-3 shadow-lg">
+            <div class="space-y-2">
+                <label for="username" class="block text-sm">Username</label>
+                <input type="text" name="username" id="username" class="rounded-md h-9">
+            </div>
+            <div class="space-y-2">
+                <label for="username" class="block text-sm">Password</label>
+                <input type="text" name="username" id="username" class="rounded-md h-9">
+            </div>
+            <button class="bg-orange-400 text-orange-800 w-full font-bold h-9">
+                Create an account
+            </button>
+        </form>
+        <div class="p-4 border border-slate-800 rounded center flex-col gap-1 shadow-lg">
+            <p class="text-base">Have an account?</p>
+            <a href="/security/sign-in" class="text-orange-400 text-xs">Sign in</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

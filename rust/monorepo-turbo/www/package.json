@@ -1,0 +1,14 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "license": "ISC",
+  "private": true,
+  "packageManager": "pnpm@8.6.5",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.3"
+  }
+}

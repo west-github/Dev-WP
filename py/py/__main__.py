@@ -1,52 +1,66 @@
 from dataclasses import dataclass
-from typing import Callable
+from typing import Any, Callable, Self
 
 
 @dataclass(kw_only=True)
-class Req:
-    data: str
+class User:
+    name: str
+
+    def __len__(self) -> int:
+        return len(self.name)
+
+    @classmethod
+    def user_cls(cls, name: str) -> Self:
+        return cls(name=name)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 
-@dataclass(kw_only=True)
-class MutableResponse:
-    data: str | None = None
+class West(User):
+
+    def __repr__(self) -> str:
+        return f"West(name='{self.name}')"
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
 
-type Handler = Callable[[Req, MutableResponse, Callable[[], None]], None]
+def decor(func) -> Callable[[], None]:
+    def wrapper(*args, **kwargs) -> None:
+        print(f"Inside the decorator with args: {args[0]}")
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
-def sequence(handlers: list[Handler]) -> Handler:
+class other:
 
-    def handler(req: Req, res: MutableResponse, next: Callable[[], None]) -> None:
-        def _handler(idx: int) -> None:
-            while idx < len(handlers):
-                return handlers[idx](req, res, lambda: _handler(idx + 1))
-            return next()
+    def __init__(self, *, log: bool) -> None:
+        self.log = log
 
-        return _handler(0)
+    def __call__(self, func) -> Any:
 
-    return handler
+        if self.log:
+            print(f"This is decorator with args: {self.log}")
 
+        def wrapper(*args, **kwargs):
+            res = func(*args, **kwargs)
+            print("This should print last")
+            return res
 
-def middleware_one(req: Req, res: MutableResponse, next: Callable[[], None]) -> None:
-    print(f"Got this value in middleware one: {req} - {res}")
-
-    res.data = "Middleware one mutate response data"
-
-    # If you didn't call next the next middleware in chain won't be called and response will be return  if you
-    next()
+        return wrapper
 
 
-def middleware_two(req: Req, res: MutableResponse, next: Callable[[], None]) -> None:
-    print(f"Got this value in middleware two: {req} - {res}")
+@other(log=True)
+@decor
+def use_decor(name: str) -> int:
+    return len(name)
 
-    next()
 
+# Always true
+if __name__ == "__main__":
+    west = West.user_cls("East")
+    print(f"{west}")
 
-res = sequence([middleware_one, middleware_two])
-
-res(
-    Req(data="Some data in bytes"),
-    MutableResponse(),
-    lambda: print("This is the handler function that contain your application logic"),
-)
+    use_decor("West is golden")

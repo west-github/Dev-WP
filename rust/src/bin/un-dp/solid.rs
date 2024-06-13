@@ -25,12 +25,6 @@ fn error(content: String) -> String {
     format!("***RED: {}***", content)
 }
 
-// Hacker X Terminal Hacker Theme, Lua dark theme
-
-// Rebecca Dark
-
-// Slab 2077 Pro Amoled Black Shiny
-
 #[test]
 fn solid_test() {
     use rust::string;

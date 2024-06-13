@@ -1,0 +1,14 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "pipeline": {
+        "build": {
+            "dependsOn": ["^build"]
+        },
+        "lint": {},
+        "dev": {
+            "outputs": ["./svelte-kit/**"],
+            "cache": false,
+            "persistent": true
+        }
+    }
+}

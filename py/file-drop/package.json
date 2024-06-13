@@ -1,0 +1,21 @@
+{
+  "name": "file-drop",
+  "version": "1.0.0",
+  "description": "Quick project to learn about file streaming and pre-signed urls",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm:tailwind\" \"npm:server\"",
+    "server": "fastapi dev main.py",
+    "tailwind": "tailwindcss -i ./static/css/app.css -o ./static/asset/app.css --watch"
+  },
+  "keywords": [
+    "upload",
+    "file"
+  ],
+  "author": "West",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "tailwindcss": "^3.4.4"
+  }
+}

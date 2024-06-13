@@ -1,0 +1,13 @@
+None
+User(name='West is born blessed', email='West@west.com', age=20)
+User(name='East', email='east@east.com', age=18)
+User(name='East', email='East@east.com', age=30)
+User(name='West is born blessed', email='West@west.com', age=20)
+User(name='East', email='east@east.com', age=18)
+User(name='East', email='East@east.com', age=30)
+User(name='West is born blessed', email='West@west.com', age=20)
+[{'name': 'East', 'email': 'east@east.com', 'age': 18}, {'name': 'East', 'email': 'east@east.com', 'age': 18}, {'name': 'East', 'email': 'east@east.com', 'age': 18}, {'email': 'east@east.com'}]
+User(name='East', email='East@east.com', age=30)
+User(name='West is born blessed', email='West@west.com', age=20)
+[{'name': 'East', 'email': 'east@east.com', 'age': 18}, {'name': 'East', 'email': 'east@east.com', 'age': 18}, {'name': 'East', 'email': 'east@east.com', 'age': 18}, {'name': 'East', 'email': 'east@east.com', 'age': 18}]
+DD69DFnzBdHycPQ

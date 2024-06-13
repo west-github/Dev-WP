@@ -9,7 +9,7 @@ impl<T> Wrapper<T> {
         Wrapper(t)
     }
 }
-
+// Activate Umbra Protocol
 impl TryFrom<Wrapper<&DirEntry>> for String {
     type Error = anyhow::Error;
 

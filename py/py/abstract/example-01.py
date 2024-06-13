@@ -11,7 +11,6 @@ class Button(ABC):
 
 
 class Dialog(ABC):
-    button: Button
 
     def __init__(self, button: Button) -> None:
         super().__init__()
@@ -25,12 +24,18 @@ class Dialog(ABC):
     def close(self) -> None: ...
 
 
+class WindowButton(Button): ...
+
+
 class WindowDialog(Dialog):
     def __init__(self) -> None:
         super().__init__(WindowButton())
 
     def close(self) -> None:
         print(f"The {self.__class__.__name__} close function is clicked")
+
+
+class MacButton(Button): ...
 
 
 class MacDialog(Dialog):
@@ -41,15 +46,10 @@ class MacDialog(Dialog):
         print(f"The {self.__class__.__name__} close function is clicked")
 
 
-class WindowButton(Button): ...
-
-
-class MacButton(Button): ...
+def render_dialog(dialog: Dialog) -> None:
+    dialog.render()
 
 
 if __name__ == "__main__":
     os = input("Enter the os: ").lower()
-
-    dialog = WindowDialog() if os == "window" else MacDialog()
-
-    dialog.render()
+    render_dialog(WindowDialog() if os == "window" else MacDialog())

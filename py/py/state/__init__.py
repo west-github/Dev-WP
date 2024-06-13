@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 
 class State(ABC):
-    _app: Any
+    _app: Any | None = None
 
     @property
     def app(self) -> Any:
